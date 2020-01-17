@@ -2,27 +2,28 @@ import com.typesafe.config._
 //https://github.com/lightbend/config#api-example
 import scala.util.matching.Regex
 
-class GPIO(name: String) {
+class GPIO(name_i: String) {
   //println(name)
+  val name = name_i
   var mode: String = "in"
   var state: String = "undefined"
   var dutycycle: Int = 50
   var attributes = FileHandlers.catArr(GeneralConfig.MYPATH + name)
-  attributes.foreach(println(_))
-
+  //attributes.foreach(println(_))
   try {
     mode = attrValue("mode")
     getState
   } catch {
-    case e: Exception => println("Couldn't create GPIO")
+    case e: Exception => println("Couldn't create GPIO " + name)
   }
 
   private def getState(): Unit = {
     if (mode != "pwm") {
       state = attrValue("state")
       dutycycle = 0
-    } else {
+    } else if (mode == "pwm") {
       dutycycle = attrValue("dutycycle").asInstanceOf[Int]
+      println("My DC is: " + dutycycle)
     }
   }
 

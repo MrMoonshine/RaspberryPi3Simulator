@@ -39,8 +39,8 @@ object FileHandlers {
 
   def dirList(dir_i: String): Array[String] = {
     val filearr = gpiodir.list
-    filearr.foreach(println(_))
-    println("list end!")
+    //filearr.foreach(println(_))
+    //println("list end!")
     return filearr
   }
 
