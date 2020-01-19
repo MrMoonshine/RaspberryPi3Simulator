@@ -18,6 +18,7 @@ object GeneralConfig {
   var iouiarr: Array[UiGpio] = Array[UiGpio]()
 
   var ledColor: Color = java.awt.Color.GREEN
+  val PCB_COLOR: Color = new Color(40, 111, 29, 255)
 
   var MainFrame = new JFrame
 
@@ -48,10 +49,14 @@ object GeneralConfig {
     MainFrame.setBackground(java.awt.Color.BLACK)
     MainFrame.setLayout(genGrid(myGPIOs.length))
     for (j <- iouiarr.indices) {
-      MainFrame.add(iouiarr(j).myLabel)
+      if (iouiarr(j).mode == "in") {
+        MainFrame.add(iouiarr(j).butt)
+      } else {
+        MainFrame.add(iouiarr(j).myLabel)
+      }
     }
-    MainFrame.setSize(400, 500)
-    MainFrame.setTitle("Oida")
+    MainFrame.setSize(600, 300)
+    MainFrame.setTitle("I'm a Raspberry-Pi! trust me!")
     MainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
     MainFrame.setVisible(true)
   }

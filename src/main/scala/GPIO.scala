@@ -8,11 +8,13 @@ class GPIO(name_i: String) {
   var mode: String = "in"
   var state: String = "undefined"
   var dutycycle: Int = 50
+
   var attributes = FileHandlers.catArr(GeneralConfig.MYPATH + name)
   //attributes.foreach(println(_))
   try {
     mode = attrValue("mode")
     getState
+    //println("Successfully created " + name)
   } catch {
     case e: Exception => println("Couldn't create GPIO " + name)
   }
@@ -22,15 +24,15 @@ class GPIO(name_i: String) {
       state = attrValue("state")
       dutycycle = 0
     } else if (mode == "pwm") {
-      dutycycle = attrValue("dutycycle").asInstanceOf[Int]
-      println("My DC is: " + dutycycle)
+      dutycycle = attrValue("dutycycle").toInt
+      //println("My DC is: " + dutycycle)
     }
   }
 
   //This function will return the first (case-insensitive) match of an String Array
   //if nothing is found it throws an Exception
   private def findInArray(arr: Array[String], searchString: String): String = {
-    var fpatt: Regex = searchString.toLowerCase.r
+    val fpatt: Regex = searchString.toLowerCase.r
     for (j <- arr.indices) {
       fpatt.findFirstMatchIn(arr(j).toLowerCase) match {
         case Some(_) => return arr(j).toLowerCase
@@ -65,6 +67,12 @@ class GPIO(name_i: String) {
     } catch {
       case e: Exception => ;
     }
+  }
+
+  def getID(): String = {
+    val ipatt: Regex = "([0-9- ]+)".r
+
+    ipatt.findFirstIn(name).get
   }
 
 }
