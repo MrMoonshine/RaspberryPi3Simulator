@@ -20,8 +20,10 @@ class GPIO(name_i: String) {
   }
 
   private def getState(): Unit = {
+    println("getting state! " + name)
     if (mode != "pwm") {
       state = attrValue("state")
+      println(state)
       dutycycle = 0
     } else if (mode == "pwm") {
       dutycycle = attrValue("dutycycle").toInt
