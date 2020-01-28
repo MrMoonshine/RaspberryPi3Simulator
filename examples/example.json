@@ -1,0 +1,8 @@
+{
+    "pins":[
+        {"id":0,"mode":"in"},
+        {"id":1,"mode":"out"},
+        {"id":2,"mode":"pwm"}
+    ],
+    "tempSrc":"/sys/class/thermal/thermal_zone0/temp"
+}
